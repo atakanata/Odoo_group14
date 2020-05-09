@@ -12,31 +12,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- * This class will be extended by page classes
- * Ant common webelements/locators can be stored here
- * Since navigation menu doesn't belong to particular page
- * We cannot really create a dedicated page class to store
- * elements from that menu
- */
 public abstract class AbstractPageBase {
     protected WebDriver driver = Driver.getDriver();
     protected WebDriverWait wait = new WebDriverWait(driver, 25);
 
-    @FindBy(css = "#user-menu > a")
+    @FindBy(css = ".oe_topbar_name")
     protected WebElement currentUser;
-
-    @FindBy(css = "[class='btn-group pull-right'] > button")
-    protected WebElement saveAndClose;
 
     public AbstractPageBase() {
         PageFactory.initElements(driver, this);
-    }
-
-    public void clickOnSaveAndClose() {
-        BrowserUtilities.wait(3);
-        wait.until(ExpectedConditions.elementToBeClickable(saveAndClose)).click();
-        waitForLoaderMask();
     }
 
     public String getCurrentUserName() {
@@ -45,39 +29,41 @@ public abstract class AbstractPageBase {
         return currentUser.getText().trim();
     }
 
-
-    /**
-     * Method for vytrack navigation. Provide tab name and module name to navigate
-     *
-     * @param tabName,    like Dashboards, Fleet or Customers
-     * @param moduleName, like Vehicles, Vehicles Odometer and Vehicles Costs
-     */
-    public void navigateTo(String tabName, String moduleName) {
-        String tabNameXpath = "//span[@class='title title-level-1' and contains(text(),'" + tabName + "')]";
-        String moduleXpath = "//span[@class='title title-level-2' and text()='" + moduleName + "']";
-
+    public void navigateToMainTab(String tabName) {
+        String tabNameXpath = "//*[@id='oe_main_menu_navbar']//div[2]/ul/li/a/span[contains(text(),'"+tabName+"')]";
         WebElement tabElement = driver.findElement(By.xpath(tabNameXpath));
-        WebElement moduleElement = driver.findElement(By.xpath(moduleXpath));
-
-        Actions actions = new Actions(driver);
-
-        BrowserUtilities.wait(4);
-
-        actions.moveToElement(tabElement).
-                pause(2000).
-                click(moduleElement).
-                build().perform();
-
-        //increase this wait rime if still failing
-        BrowserUtilities.wait(4);
-        waitForLoaderMask();
+        tabElement.click();
     }
 
-    /**
-     * this method can be used to wait until that terrible loader mask (spinning wheel) will be gone
-     * if loader mask is present, website is loading some data and you cannot perform any operations
-     */
-    public void waitForLoaderMask() {
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class*='loader-mask']")));
+    public void navigateToSubTab(String subTabName){
+        BrowserUtilities.waitForPageToLoad(30);
+        String subTabXPath = "";
+        switch(subTabName.toUpperCase()){
+            case "PIPELINE":
+            case "QUOTATIONS":
+            case "CUSTOMERS":
+            case "SESSIONS":
+            case "PRODUCTS":
+            case "PRICELISTS":
+            case "SALES DETAILS":
+            case "POS CATEGORIES":
+                subTabXPath = "(//span[@class='oe_menu_text' and contains(text(),'"+subTabName+"')])[1]";
+                break;
+            case "POINT OF SALE":
+                subTabXPath = "(//span[@class='oe_menu_text' and contains(text(),'"+subTabName+"')])[2]";
+                break;
+            case "ORDERS":
+                subTabXPath = "(//span[@class='oe_menu_text' and contains(text(),'"+subTabName+"')])[6]";
+                break;
+            case "ORDERSUNDERREPORTING":
+                subTabXPath = "(//span[@class='oe_menu_text' and contains(text(),'"+subTabName+"')])[7]";
+                break;
+            default:
+                System.out.println("There is no such module.");
+                break;
+
+        }
+        WebElement subTabElement = driver.findElement(By.xpath(subTabXPath));
+        subTabElement.click();
     }
 }
