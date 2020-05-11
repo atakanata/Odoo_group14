@@ -9,7 +9,8 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue= "com/odooerp/step_definitions",
         dryRun=false,
-        tags="@login",
+        strict = false,
+        tags="@CRMmain",
 
         plugin = {"html:target/default-cucumber-reports",
                 "rerun:target/rerun.txt",
