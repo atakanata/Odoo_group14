@@ -1,4 +1,4 @@
-package com.odooerp.step_definations;
+package com.odooerp.step_definitions;
 
 import com.odooerp.pages.LoginPage;
 import com.odooerp.utilities.ConfigurationReader;
@@ -6,7 +6,7 @@ import com.odooerp.utilities.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
-public class loginStepDefination {
+public class loginStepDefinition {
 
     LoginPage loginPage=new LoginPage();
 

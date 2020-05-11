@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src\\test\\resources\\features",
-        glue="com\\odooerp\\step_definations",
+        features = "src/test/resources/features",
+        glue= "com/odooerp/step_definitions",
         dryRun=false,
         tags="@login",
 
