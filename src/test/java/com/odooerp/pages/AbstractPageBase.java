@@ -1,12 +1,10 @@
 package com.odooerp.pages;
 
-
 import com.odooerp.utilities.BrowserUtilities;
 import com.odooerp.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -36,7 +34,7 @@ public abstract class AbstractPageBase {
     }
 
     public void navigateToSubTab(String subTabName){
-        BrowserUtilities.waitForPageToLoad(30)
+        BrowserUtilities.waitForPageToLoad(30);
         String subTabXPath = "";
         switch(subTabName.toUpperCase()){
             case "PIPELINE":
