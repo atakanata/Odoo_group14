@@ -36,7 +36,7 @@ public abstract class AbstractPageBase {
     }
 
     public void navigateToSubTab(String subTabName){
-        BrowserUtilities.waitForPageToLoad(30);
+        BrowserUtilities.waitForPageToLoad(30)
         String subTabXPath = "";
         switch(subTabName.toUpperCase()){
             case "PIPELINE":
