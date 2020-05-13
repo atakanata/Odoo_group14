@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         glue= "com/odooerp/step_definitions",
         dryRun=false,
         strict = false,
-        tags="@CRMmain",
+        tags="@order_details",
 
         plugin = {"html:target/default-cucumber-reports",
                 "rerun:target/rerun.txt",
